@@ -1,5 +1,5 @@
 # CustomClothingBase
-A mod for ACE, Asheron's Call Emulator, that allows for customized colors and other options through modifying the ClothingTable on the server.
+A mod for ACE, Asheron's Call Emulator, that allows for customized colors and other options through modifying the ClothingTable on the server. Huge thanks to [Aquafir](https://github.com/aquafir/) for the ACE Mod system and for answering my annoying questions on how to get it work.
 
 ## Installation and Usage
 
