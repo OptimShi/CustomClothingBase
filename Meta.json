@@ -1,0 +1,10 @@
+{
+  "Name": "CustomClothingBase",
+  "Author": "",
+  "Description": "Will enable loading of custom Clothing Base entries.",
+  "Version": "1.0",
+  "Enabled": true,
+  "HotReload": true,
+  "RegisterCommands": true,
+  "ACEVersion": "0.0"
+}

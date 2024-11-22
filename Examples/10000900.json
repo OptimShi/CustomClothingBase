@@ -1,0 +1,243 @@
+{
+    "ClothingBaseEffects": {
+        "33554510": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33561112": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33561104": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33560944": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33554433": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33561114": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33561106": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33561386": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33561100": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33561108": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33560941": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33561069": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33561102": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33561110": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33560942": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33560943": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        },
+        "33560839": {
+            "CloObjectEffects": [
+                {
+                    "Index": "30",
+                    "ModelId": "16797048",
+                    "CloTextureEffects": [
+                        {
+                            "OldTexture": "83899141",
+                            "NewTexture": "83890391"
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "Id": 268437763
+}
