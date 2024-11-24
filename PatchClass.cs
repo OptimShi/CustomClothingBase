@@ -297,6 +297,18 @@ namespace CustomClothingBase
                 return;
             }
 
+            if (clothingBaseId < 0x10000000 && clothingBaseId > 0x10FFFFFF)
+            {
+                ModManager.Log($"{clothingBaseId:X8} is not a valid ClothingBase between 0x10000000 and 0x10FFFFFF");
+                return;
+            }
+
+            if (!DatManager.PortalDat.AllFiles.ContainsKey(clothingBaseId))
+            {
+                ModManager.Log($"ClothingBase {clothingBaseId:X8} not found.");
+                return;
+            }
+
             string exportFilename = getFilename(clothingBaseId);
             var cbToExport = DatManager.PortalDat.ReadFromDat<ClothingTable>(clothingBaseId);
 
