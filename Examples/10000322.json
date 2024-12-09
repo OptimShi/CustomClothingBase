@@ -4,15 +4,25 @@
       "Icon": 0,
       "CloSubPalettes": [
         {
-          "Ranges": [{ "Offset": 1920, "NumColors": 48 }],
-          "PaletteSet": 251658248
+          "Ranges": [
+            {
+              "Offset": 1920,
+              "NumColors": 48
+            }
+          ],
+          "PaletteSet": "0xF000008"
         },
         {
-          "Ranges": [{ "Offset": 1968, "NumColors": 80 }],
-          "PaletteSet": 251658783
+          "Ranges": [
+            {
+              "Offset": 1968,
+              "NumColors": 80
+            }
+          ],
+          "PaletteSet": "0xF00021F"
         }
       ]
     }
   },
-  "Id": 268436258
+  "Id": "0x10000322"
 }

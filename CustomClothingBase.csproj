@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
 		<NoWarn>0436;1073;8509</NoWarn>
@@ -10,7 +9,28 @@
 		<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<PlatformTarget>x64</PlatformTarget>
+		<SatelliteResourceLanguages>en</SatelliteResourceLanguages>
 	</PropertyGroup>
+
+	<!--Conditional check of a defined constant 'REALM' that lets you check for $(Realms)-->
+	<PropertyGroup>
+		<!--<DefineConstants>$(DefineConstants);REALM</DefineConstants>-->
+		<Realms>$(DefineConstants.Contains('REALM'))</Realms>
+	</PropertyGroup>
+	<!--ACE References-->
+	<PropertyGroup Condition="!$(Realms)">
+		<ACEPath>C:\ACE\Server</ACEPath>
+	</PropertyGroup>
+	<ItemGroup Condition="!$(Realms)">
+		<PackageReference Include="ACEmulator.ACE.Shared" Version="1.*" />
+	</ItemGroup>
+	<!--Realms References-->
+	<PropertyGroup Condition="$(Realms)">
+		<ACEPath>C:\ACE\RealmServer</ACEPath>
+	</PropertyGroup>
+	<ItemGroup Condition="$(Realms)">
+		<PackageReference Include="ACRealms.ACE.Shared" Version="1.*" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<Compile Remove=".template.config\**" />
@@ -19,52 +39,69 @@
 	</ItemGroup>
 
 	<PropertyGroup>
-		<PublicizeAll>true</PublicizeAll>
+		<PublicizerClearCacheOnClean>true</PublicizerClearCacheOnClean>
 	</PropertyGroup>
+	<ItemGroup>
+		<Publicize Include="ACE.Server" />
+		<Publicize Include="ACE.DatLoader" />
+		<Publicize Include="ACE.Database" />
+	</ItemGroup>
 
-  <ItemGroup>
-		<PackageReference Include="JsonNet.ContractResolvers" Version="2.0.0" />
-		<PackageReference Include="Lib.Harmony" Version="2.3.3" />
-		<PackageReference Include="ACEmulator.ACE.Shared" Version="1.0.6" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	<ItemGroup>
+		<PackageReference Include="ACEmulator.ACE.Shared" Version="1.0.8" />
+		<PackageReference Include="Krafs.Publicizer" Version="2.2.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Lib.Harmony" Version="2.3.3" ExcludeAssets="runtime" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
-		<!--<PackageReference Include="System.Text.Json" Version="7.0.0" Aliases="Json" />-->
 	</ItemGroup>
 
 	<ItemGroup>
 		<Reference Include="ACE.Adapter">
-			<HintPath>D:\Source\ACE\Source\ACE.Server\bin\x64\Debug\net8.0\ACE.Adapter.dll</HintPath>
+			<HintPath>$(ACEPath)\ACE.Adapter.dll</HintPath>
 			<Private>False</Private>
+			<CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+			<ExcludeAssets>all</ExcludeAssets>
 		</Reference>
 		<Reference Include="ACE.Common">
-			<HintPath>D:\Source\ACE\Source\ACE.Server\bin\x64\Debug\net8.0\ACE.Common.dll</HintPath>
+			<HintPath>$(ACEPath)\ACE.Common.dll</HintPath>
 			<Private>False</Private>
+			<CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+			<ExcludeAssets>all</ExcludeAssets>
 		</Reference>
 		<Reference Include="ACE.Database">
-			<HintPath>D:\Source\ACE\Source\ACE.Server\bin\x64\Debug\net8.0\ACE.Database.dll</HintPath>
+			<HintPath>$(ACEPath)\ACE.Database.dll</HintPath>
 			<Private>False</Private>
+			<CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+			<ExcludeAssets>all</ExcludeAssets>
 		</Reference>
 		<Reference Include="ACE.DatLoader">
-			<HintPath>D:\Source\ACE\Source\ACE.Server\bin\x64\Debug\net8.0\ACE.DatLoader.dll</HintPath>
+			<HintPath>$(ACEPath)\ACE.DatLoader.dll</HintPath>
 			<Private>False</Private>
+			<CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+			<ExcludeAssets>all</ExcludeAssets>
 		</Reference>
 		<Reference Include="ACE.Entity">
-			<HintPath>D:\Source\ACE\Source\ACE.Server\bin\x64\Debug\net8.0\ACE.Entity.dll</HintPath>
+			<HintPath>$(ACEPath)\ACE.Entity.dll</HintPath>
 			<Private>False</Private>
+			<CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+			<ExcludeAssets>all</ExcludeAssets>
 		</Reference>
 		<Reference Include="ACE.Server">
-			<HintPath>D:\Source\ACE\Source\ACE.Server\bin\x64\Debug\net8.0\ACE.Server.dll</HintPath>
+			<HintPath>$(ACEPath)\ACE.Server.dll</HintPath>
 			<Private>False</Private>
+			<CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+			<ExcludeAssets>all</ExcludeAssets>
 		</Reference>
 		<Reference Include="Microsoft.EntityFrameworkCore">
-			<HintPath>D:\Source\ACE\Source\ACE.Server\bin\x64\Debug\net8.0\Microsoft.EntityFrameworkCore.dll</HintPath>
+			<HintPath>$(ACEPath)\Microsoft.EntityFrameworkCore.dll</HintPath>
 			<Private>False</Private>
-		</Reference>
-		<Reference Include="Microsoft.EntityFrameworkCore.Abstractions">
-		  <HintPath>D:\Source\ACE\Source\ACE.Server\bin\x64\Debug\net8.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
-		</Reference>
-		<Reference Include="Microsoft.EntityFrameworkCore.Relational">
-		  <HintPath>D:\Source\ACE\Source\ACE.Server\bin\x64\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
+			<CopyLocalSatelliteAssemblies>false</CopyLocalSatelliteAssemblies>
+			<ExcludeAssets>all</ExcludeAssets>
 		</Reference>
 	</ItemGroup>
 

@@ -22,6 +22,16 @@ The following commands are part of the mod.
 > `@clear-clothing-cache` - *Clears the ClothingTable file cache.*  
 This will force the ClothingTable to reload; useful to allow you to make changes on the fly while testing or without reloading the server.
 
+> `@export-clothing` - *Exports the ClothingBase of an Admin character's currently selected WorldObject if available*
+
+
+
+## Settings
+
+* `WatchContent` will monitor changes to files in the `/json/` folder.  When there are changes it clears the cache and requests the first online player redraws their model.
+* `ClearCacheOnShutdown` clears the cache when the mod is disposed.
+* `HexKeys` determines which properties will use a hex string.
+
 ## Examples
 
 Please see the [Examples folder](https://github.com/OptimShi/CustomClothingBase/tree/master/Examples) some ideas and examples on how to use this mod.
