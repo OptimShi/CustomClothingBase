@@ -19,13 +19,26 @@
 	</ItemGroup>
 
 	<PropertyGroup>
-		<PublicizeAll>true</PublicizeAll>
+		<PublicizerClearCacheOnClean>true</PublicizerClearCacheOnClean>
+		<BaseOutputPath>C:\ace\mods\CustomClothingBase\</BaseOutputPath>
 	</PropertyGroup>
+    <ItemGroup>
+		<Publicize Include="ACE.Server" />
+		<Publicize Include="ACE.DatLoader" />
+		<Publicize Include="ACE.Database" />
+	</ItemGroup>
 
-  <ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ACEmulator.ACE.Shared" Version="1.0.9" />
+		<PackageReference Include="Krafs.Publicizer" Version="2.2.1">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+    <ItemGroup>
 		<PackageReference Include="JsonNet.ContractResolvers" Version="2.0.0" />
 		<PackageReference Include="Lib.Harmony" Version="2.3.3" />
-		<PackageReference Include="ACEmulator.ACE.Shared" Version="1.0.6" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 		<!--<PackageReference Include="System.Text.Json" Version="7.0.0" Aliases="Json" />-->
@@ -67,7 +80,7 @@
 		  <HintPath>D:\Source\ACE\Source\ACE.Server\bin\x64\Debug\net8.0\Microsoft.EntityFrameworkCore.Relational.dll</HintPath>
 		</Reference>
 	</ItemGroup>
-
+    
 	<ItemGroup>
 		<None Update="Meta.json">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
