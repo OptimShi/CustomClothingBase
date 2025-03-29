@@ -9,10 +9,8 @@ public class Settings
     public HashSet<string> HexKeys { get; set; } = new()
     {
         "ClothingBaseEffect",
-        "PaletteSet",
-        "ModelId",
-        "Id",
-        "OldTexture",
-        "NewTexture",
+//        "PaletteSet",
+//        "ModelId",
+//        "Id",
     };
 }

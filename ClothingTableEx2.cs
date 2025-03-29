@@ -90,6 +90,7 @@ public class ClothingBaseEffectEx : ClothingBaseEffect
 public class CloObjectEffectExt : CloObjectEffect
 {
     public new uint Index { get; set; }
+    [JsonConverter(typeof(HexUintJsonConverter))] 
     public new uint ModelId { get; set; }
     public new List<CloTextureEffectEx> CloTextureEffects { get; set; } = new();
 
@@ -105,7 +106,9 @@ public class CloObjectEffectExt : CloObjectEffect
 
 public class CloTextureEffectEx : CloTextureEffect
 {
+    [JsonConverter(typeof(HexUintJsonConverter))]
     public new uint OldTexture { get; set; }
+    [JsonConverter(typeof(HexUintJsonConverter))] 
     public new uint NewTexture { get; set; }
     public CloTextureEffect Convert()
     {

@@ -33,25 +33,26 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         {
             WriteIndented = true,
             AllowTrailingCommas = true,
-            Converters = { },
-            TypeInfoResolver = new HexTypeResolver(Settings.HexKeys),
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            //Converters = { },
+            Converters = { new HexUintJsonConverter() },
+            //TypeInfoResolver = new HexTypeResolver(Settings.HexKeys),
+            //Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
         };
 
         //Dictionaries messier to handle
         List<JsonConverter> converters = new();
-        /*
         if (Settings.HexKeys.Contains(nameof(ClothingBaseEffect)))
         {
             converters.Add(new HexKeyDictionaryConverter<uint, ClothingBaseEffect>());
             converters.Add(new HexKeyDictionaryConverter<uint, ClothingBaseEffectEx>());
         }
-        */
+        /*
         foreach (var converter in converters)
             _jsonSettings.Converters.Add(converter);
 
         _jsonSettings.Converters.Add(new HexUintJsonConverter());
+         */
 
         if (Settings.WatchContent)
         {

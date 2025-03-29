@@ -14,12 +14,10 @@ public class HexConverter<T> : JsonConverter<T> where T : INumber<T>
 
     public override T Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-//        if ((reader.TokenType == JsonTokenType.String || reader.TokenType == JsonTokenType.Number))
         if ((reader.TokenType == JsonTokenType.String))
         {
             var hexString = reader.GetString();
-            //if (reader.GetString() is string hexString)
-                if (hexString.TryParseHex<T>(out var result))
+                if (hexString is not null && hexString.TryParseHex<T>(out var result))
                     return result;
 
         }
