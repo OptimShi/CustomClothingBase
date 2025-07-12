@@ -304,6 +304,7 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
                     return null;
 
                 var ctx = JsonSerializer.Deserialize<ClothingTableEx>(jsonString, _jsonSettings);
+                //var ctx = Json5Core.Json5.Deserialize<ClothingTableEx>(jsonString);
                 var clothingTable = ctx.Convert();
                 return clothingTable;
             }

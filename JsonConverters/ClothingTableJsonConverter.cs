@@ -11,16 +11,20 @@ namespace CustomClothingBase.JsonConverters
     {
         public override uint Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
+            string hexString;
+            string intString;
             if (reader.TokenType == JsonTokenType.String)
             {
-                var hexString = reader.GetString();
+                 hexString = reader.GetString();
+                if(hexString == "0")
+                    return 0;
                 if (hexString is not null && hexString.TryParseHex<uint>(out var result))
                     return result;
 
             }
             else if (reader.TokenType == JsonTokenType.Number)
             {
-                var intString = reader.GetUInt32().ToString();
+                 intString = reader.GetUInt32().ToString();
                 if (intString.TryParseHex<uint>(out var result))
                     return result;
             }
