@@ -1,18 +1,28 @@
 {
-  "ClothingSubPalEffects": {
-    "8": {
-      "Icon": 0,
-      "CloSubPalettes": [
-        {
-          "Ranges": [{ "Offset": 1920, "NumColors": 48 }],
-          "PaletteSet": 251658248
-        },
-        {
-          "Ranges": [{ "Offset": 1968, "NumColors": 80 }],
-          "PaletteSet": 251658783
+    "ClothingSubPalEffects": {
+        "8": {
+            "Icon": 0,
+            "CloSubPalettes": [
+                {
+                    "Ranges": [
+                        {
+                            "Offset": 1920,
+                            "NumColors": 48
+                        }
+                    ],
+                    "PaletteSet": "0x0f000008"
+                },
+                {
+                    "Ranges": [
+                        {
+                            "Offset": 1968,
+                            "NumColors": 80
+                        }
+                    ],
+                    "PaletteSet": "0x0f00021f"
+                }
+            ]
         }
-      ]
-    }
-  },
-  "Id": 268436258
+    },
+    "Id": "0x10000322"
 }

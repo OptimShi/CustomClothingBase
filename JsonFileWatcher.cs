@@ -15,7 +15,7 @@ public class JsonFileWatcher
         };
 
         _contentWatcher.Changed += OnFileChanged;
-        _contentWatcher.EnableRaisingEvents = true;
+        _contentWatcher.EnableRaisingEvents = false;
     }
 
     private void OnFileChanged(object sender, FileSystemEventArgs e)

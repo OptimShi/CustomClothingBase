@@ -30,7 +30,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="ACEmulator.ACE.Shared" Version="1.0.9" />
-		<PackageReference Include="Krafs.Publicizer" Version="2.2.1">
+		<PackageReference Include="Krafs.Publicizer" Version="2.3.0">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
@@ -38,7 +38,7 @@
 
     <ItemGroup>
 		<PackageReference Include="JsonNet.ContractResolvers" Version="2.0.0" />
-		<PackageReference Include="Lib.Harmony" Version="2.3.3" />
+		<PackageReference Include="Lib.Harmony" Version="2.3.6" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 		<!--<PackageReference Include="System.Text.Json" Version="7.0.0" Aliases="Json" />-->

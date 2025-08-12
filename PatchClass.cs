@@ -33,32 +33,17 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         {
             WriteIndented = true,
             AllowTrailingCommas = true,
-            //Converters = { },
-            Converters = { new HexUintJsonConverter() },
-            //TypeInfoResolver = new HexTypeResolver(Settings.HexKeys),
-            //Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
             NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
         };
-
-        //Dictionaries messier to handle
-        List<JsonConverter> converters = new();
-        if (Settings.HexKeys.Contains(nameof(ClothingBaseEffect)))
-        {
-            converters.Add(new HexKeyDictionaryConverter<uint, ClothingBaseEffect>());
-            converters.Add(new HexKeyDictionaryConverter<uint, ClothingBaseEffectEx>());
-        }
-        /*
-        foreach (var converter in converters)
-            _jsonSettings.Converters.Add(converter);
-
         _jsonSettings.Converters.Add(new HexUintJsonConverter());
-         */
-
+        _jsonSettings.Converters.Add(new HexKeyDictionaryConverter<uint, ClothingBaseEffect>());
+        _jsonSettings.Converters.Add(new HexKeyDictionaryConverter<uint, ClothingBaseEffectEx>());
+              
         if (Settings.WatchContent)
         {
             Directory.CreateDirectory(ContentDir);
             _contentWatcher = new(ContentDir);
-            ModManager.Log($"Watching ClothingBase changes in:\n{ContentDir}");
+            ModManager.Log($"CustomClothingBase: Watching ClothingBase changes in:\n{ContentDir}");
         }
 
         return base.OnWorldOpen();
@@ -117,6 +102,37 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         //Return true to execute original
         return true;
     }
+
+    /// <summary>
+    /// Override the Unpack of a PaletteSet. This is needed to adjust for the fact that it might actually be a Palette entry that we have manually defined in our CustomClothingBase
+    /// </summary>
+    /// <param name="reader"></param>
+    /// <param name="__instance"></param>
+    /// <returns></returns>
+    [HarmonyPrefix]
+    [HarmonyPatch(typeof(PaletteSet), nameof(PaletteSet.Unpack), new Type[] { typeof(BinaryReader) })]
+    public static bool PreUnpack(BinaryReader reader, ref PaletteSet __instance)
+    {
+        // Check if this is REALLY a Palette in disguise!
+        uint id = reader.ReadUInt32();
+        if (id >= 0x04000000 && id <= 0x04FFFFFF)
+        {
+            ModManager.Log($"CustomClothingBase: Loading Palette {id:X8} as a PaletteSet");
+            __instance.Id = id;
+            __instance.PaletteList.Add(id);
+            //Return false to override
+            return false;
+        }
+
+        // Reset our position to the start
+        reader.BaseStream.Position = 0;
+
+        //Return true to execute original
+        return true;
+    }
+
+
+    #endregion
 
     /// <summary>
     /// Inserts cb2 contents into cb. If a ClothingBaseEffect or ClothingSubPalEffects exists, it will overwrite it.
@@ -189,7 +205,12 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         ExportClothingBase(clothingBaseId);
     }
 
-    [CommandHandler("export-clothing", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 0, "Exports ClothingBase entry to a JSON file in the CustomClothingBase mod folder.")]
+    /// <summary>
+    /// TODO - This will ultimately dump a copy of what
+    /// </summary>
+    /// <param name="session"></param>
+    /// <param name="parameters"></param>
+    //[CommandHandler("export-as-clothingbase", AccessLevel.Admin, CommandHandlerFlag.RequiresWorld, 1, "Exports the appearance of a an item to a specific JSON file in the CustomClothingBase mod folder.", "/export-clothing [ClothingBaseEntry]")//]
     public static void HandleExportWeenieClothing(Session session, params string[] parameters)
     {
         if (session?.Player is not Player player)
@@ -226,36 +247,6 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         player.SendMessage($"Exported ClothingBase {wo.ClothingBase:X} for {wo.Name} to:\n{GetFilename(wo.ClothingBase.Value)}");
     }
 
-    [CommandHandler("convert-clothing", AccessLevel.Admin, CommandHandlerFlag.None, 0, "Attempts to convert all custom clothing content to the serializer in the settings.")]
-    public static void ConvertClothing(Session session, params string[] parameters)
-    {
-        var conversionDir = Path.Combine(ContentDir, "converted");
-        Directory.CreateDirectory(conversionDir);
-
-        StringBuilder sb = new("Conversion to current JSON format:");
-        foreach (var file in Directory.GetFiles(ContentDir, "*.json"))
-        {
-            FileInfo fi = new(file);
-            if (!fi.RetryRead(out var json))
-                continue;
-
-            try
-            {
-                var content = JsonSerializer.Deserialize<ClothingTableEx>(json);
-                var converted = JsonSerializer.Serialize<ClothingTableEx>(content, _jsonSettings);
-                var outpath = Path.Combine(conversionDir, fi.Name);
-                File.WriteAllText(outpath, converted);
-                sb.Append($"\nConverted {fi.Name}");
-            }
-            catch (Exception ex)
-            {
-                sb.Append($"\nFailed to convert {fi.Name}:\n{ex.GetFullMessage()}");
-            }
-        }
-        ModManager.Log(sb.ToString());
-    }
-    #endregion
-
     private static bool createStubClothingBase(uint fileId)
     {
         // Create stub directory if it doesn't already exist       
@@ -282,7 +273,7 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         }
         catch (Exception ex)
         {
-            ModManager.Log($"Error creating CustomClothingTable stub for {fileId} - {ex.Message}", ModManager.LogLevel.Error);
+            ModManager.Log($"CustomClothingBase: Error creating CustomClothingTable stub for {fileId} - {ex.Message}", ModManager.LogLevel.Error);
             return false;
         }
 
@@ -294,8 +285,6 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         var fileName = GetFilename(fileId);
         if (JsonFileExists(fileId))
         {
-            Console.WriteLine($" - CustomClothingBase: Unpack {fileId:X8}");
-
             try
             {
                 //Add retries
@@ -304,13 +293,12 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
                     return null;
 
                 var ctx = JsonSerializer.Deserialize<ClothingTableEx>(jsonString, _jsonSettings);
-                //var ctx = Json5Core.Json5.Deserialize<ClothingTableEx>(jsonString);
                 var clothingTable = ctx.Convert();
                 return clothingTable;
             }
             catch (Exception E)
             {
-                ModManager.Log("CustomClothingBase.GetJsonClothing - " + E.GetFullMessage(), ModManager.LogLevel.Error);
+                ModManager.Log("CustomClothingBase: CustomClothingBase.GetJsonClothing - " + E.GetFullMessage(), ModManager.LogLevel.Error);
                 return null;
             }
         }
@@ -321,13 +309,13 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
     {
         if (clothingBaseId < 0x10000000 || clothingBaseId > 0x10FFFFFF)
         {
-            ModManager.Log($"{clothingBaseId:X8} is not a valid ClothingBase between 0x10000000 and 0x10FFFFFF");
+            ModManager.Log($"CustomClothingBase: {clothingBaseId:X8} is not a valid ClothingBase between 0x10000000 and 0x10FFFFFF");
             return;
         }
 
         if (!DatManager.PortalDat.AllFiles.ContainsKey(clothingBaseId))
         {
-            ModManager.Log($"ClothingBase {clothingBaseId:X8} not found.");
+            ModManager.Log($"CustomClothingBase: ClothingBase {clothingBaseId:X8} not found.");
             return;
         }
 
@@ -342,11 +330,11 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         {
             var json = JsonSerializer.Serialize(cbToExport, _jsonSettings);
             File.WriteAllText(exportFilename, json);
-            ModManager.Log($"Saved to {exportFilename}");
+            ModManager.Log($"CustomClothingBase: Saved to {exportFilename}");
         }
         catch (Exception E)
         {
-            ModManager.Log(E.GetFullMessage(), ModManager.LogLevel.Error);
+            ModManager.Log("CustomClothingBase: " + E.GetFullMessage(), ModManager.LogLevel.Error);
         }
     }
 
@@ -367,37 +355,6 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
 
         player.EnqueueBroadcast(new GameMessageObjDescEvent(player));
 
-        ModManager.Log($"Removed {count} ClothingTable entires from FileCache");
-    }
-}
-
-public static class SelectionExtensions
-{
-    public static bool TryGetCurrentSelection(this Player player, out WorldObject wo, SearchLocations locations = SearchLocations.Everywhere)
-    {
-        wo = null;
-
-        if (player is null)
-            return false;
-
-        //Try to find selected object ID
-        var objectId = ObjectGuid.Invalid;
-        if (player.HealthQueryTarget.HasValue)
-            objectId = new ObjectGuid(player.HealthQueryTarget.Value);
-        else if (player.ManaQueryTarget.HasValue)
-            objectId = new ObjectGuid(player.ManaQueryTarget.Value);
-        else if (player.CurrentAppraisalTarget.HasValue)
-            objectId = new ObjectGuid(player.CurrentAppraisalTarget.Value);
-
-        if (objectId == ObjectGuid.Invalid)
-            return false;
-
-#if REALM
-        wo = player.FindObject(objectId, locations);
-#else
-        wo = player.FindObject(objectId.Full, locations);
-#endif
-
-        return wo is not null;
+        ModManager.Log($"CustomClothingBase: Removed {count} ClothingTable entires from FileCache");
     }
 }
