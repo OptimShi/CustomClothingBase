@@ -1,0 +1,37 @@
+{
+    "ClothingSubPalEffects": {
+        "94": {
+            "Icon": "0x06002466",
+            "CloSubPalettes": [
+                {
+                    "Ranges": [
+                        {
+                            "Offset": 1728,
+                            "NumColors": 192
+                        }
+                    ],
+                    "PaletteSet": "0x04000988"
+                },
+                {
+                    "Ranges": [
+                        {
+                            "Offset": 1488,
+                            "NumColors": 96
+                        }
+                    ],
+                    "PaletteSet": "0x04000988"
+                },
+                {
+                    "Ranges": [
+                        {
+                            "Offset": 1392,
+                            "NumColors": 96
+                        }
+                    ],
+                    "PaletteSet": "0x040005E4"
+                }
+            ]
+        }
+    },
+    "Id": "0x10000188"
+}

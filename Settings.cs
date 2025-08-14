@@ -1,7 +1,7 @@
-﻿namespace CustomClothingBase
+namespace CustomClothingBase;
+
+public class Settings
 {
-    public class Settings
-    {
-        // Your settings here
-    }
+    public bool WatchContent { get; set; } = true;
+    public bool ClearCacheOnShutdown { get; set; } = true;
 }
