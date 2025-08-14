@@ -1,4 +1,4 @@
-﻿namespace CustomClothingBase;
+namespace CustomClothingBase;
 
 public class Settings
 {

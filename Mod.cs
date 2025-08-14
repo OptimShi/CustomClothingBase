@@ -1,4 +1,4 @@
-﻿using ACE.Shared.Mods;
+using ACE.Shared.Mods;
 
 namespace CustomClothingBase;
 public class Mod : BasicMod
