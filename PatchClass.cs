@@ -34,6 +34,7 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
             WriteIndented = true,
             AllowTrailingCommas = true,
             NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
+            PropertyNameCaseInsensitive = true,
         };
         _jsonSettings.Converters.Add(new HexUintJsonConverter());
         _jsonSettings.Converters.Add(new HexKeyDictionaryConverter<uint, ClothingBaseEffect>());
