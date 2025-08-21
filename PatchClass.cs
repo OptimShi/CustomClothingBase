@@ -34,6 +34,7 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
             WriteIndented = true,
             AllowTrailingCommas = true,
             NumberHandling = JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString,
+            PropertyNameCaseInsensitive = true,
         };
         _jsonSettings.Converters.Add(new HexUintJsonConverter());
         _jsonSettings.Converters.Add(new HexKeyDictionaryConverter<uint, ClothingBaseEffect>());
@@ -41,7 +42,6 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
               
         if (Settings.WatchContent)
         {
-            Directory.CreateDirectory(ContentDir);
             _contentWatcher = new(ContentDir);
             ModManager.Log($"CustomClothingBase: Watching ClothingBase changes in:\n{ContentDir}");
         }
@@ -117,17 +117,16 @@ public class PatchClass(BasicMod mod, string settingsName = "Settings.json") : B
         uint id = reader.ReadUInt32();
         if (id >= 0x04000000 && id <= 0x04FFFFFF)
         {
-            ModManager.Log($"CustomClothingBase: Loading Palette {id:X8} as a PaletteSet");
             __instance.Id = id;
             __instance.PaletteList.Add(id);
-            //Return false to override
+            // Return false to override
             return false;
         }
 
         // Reset our position to the start
         reader.BaseStream.Position = 0;
 
-        //Return true to execute original
+        // Return true to execute original
         return true;
     }
 
